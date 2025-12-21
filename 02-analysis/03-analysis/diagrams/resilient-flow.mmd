@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant User as User
+    participant UI as UI
+    participant DB as LocalDB\n(Room/SQLite)
+    participant Worker as BackgroundWorker
+    participant API as GitHub API
+
+    User->>UI: Tap "Send"
+    UI->>DB: Write draft (atomic) {pr_id, body, status:'pending', idempotency_key}
+    UI->>Worker: Start async POST with 30s timeout
+    Worker->>API: POST /pulls/:num/comments (include idempotency_key)
+
+    alt Success
+        API-->>Worker: 200 OK
+        Worker->>DB: Delete draft
+        Worker->>UI: Show success
+    else Timeout/Error
+        Worker--xAPI: No response after 30s
+        Worker->>DB: Update draft status='failed'
+        Worker->>UI: Show "Retry" action and keep draft
+    end
+
+    Note over User,UI: On app restart, background sync scans LocalDB for unsent drafts

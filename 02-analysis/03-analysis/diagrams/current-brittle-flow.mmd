@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant User as User
+    participant UI as UI
+    participant BG as BackgroundTask
+    participant API as GitHub API
+
+    User->>UI: Tap "Send" on new conversation
+    UI->>BG: Initiate POST request
+    BG->>API: POST /pulls/:num/comments
+    Note over API: Network hang / no response
+    loop Infinite Wait
+        BG--xAPI: No response
+        UI->>User: Spinner (no timeout/error)
+    end
+    User->>UI: Force close app
+    Note over UI: Volatile RAM cleared -> comment lost on many devices

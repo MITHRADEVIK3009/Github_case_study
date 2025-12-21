@@ -1,0 +1,8 @@
+graph TD
+    A[User types comment] --> B{Android variant / device behavior}
+    B -->|Partial OS-level caching| C[Comment may persist after force-close]
+    B -->|RAM-only volatile| D[Comment lost after force-close]
+    C --> E[Perceived persistence, inconsistent behavior]
+    D --> F[Definite data loss]
+    E --> G[Standardize with local persistence]
+    F --> G
