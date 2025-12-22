@@ -22,7 +22,7 @@ This package is scoped as a product-level deliverable: conceptual architectures,
 - This analysis uses public GitHub discussion quotes as primary evidence; no internal telemetry was available.
 - Device/version mentions in the thread may be imprecise; treat platform divergence as an observed anomaly until engineering reproduces it.
 - 
-## Acceptance criteria (example — to be validated by engineering/analytics)
+## Acceptance criteria (example - to be validated by engineering/analytics)
 - Draft persistence: On force-close after a failed send, 90% > of persisted drafts are recoverable by the client (functional verification).
 - Timeout behavior: The UI surfaces a Retry/Save Draft state within 30s of the POST request being initiated under network failure conditions.
 - Duplicate prevention: Re-sent drafts should not create duplicate comments in greater than 0.1% of retries (to be validated via telemetry after rollout).
