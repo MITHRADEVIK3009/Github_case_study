@@ -1,10 +1,22 @@
 # Case Study: Resolving GitHub Mobile Android PR Regression (Issue #181590)
-Detailed explantaion can be found in wiki page:https://github.com/MITHRADEVIK3009/Github_case_study/wiki/GitHub-Mobile-PR-Reliability-Case-Study
+
 ## Executive summary
 This focused case study documents discovery, analysis, and a prioritized, implementable solution for a critical reliability regression in GitHub Mobile (Android) that prevents users from starting new PR conversations. The deliverable demonstrates product judgment, prioritization, measurable success criteria, and cross-functional alignment.
 
+Detailed explantaion can be found in wiki page:https://github.com/MITHRADEVIK3009/Github_case_study/wiki/GitHub-Mobile-PR-Reliability-Case-Study
+
 ## Problem in one sentence
 New PR conversation creation can hang indefinitely (infinite spinner). The UI remains responsive while the background POST request never completes; users who force-close the app lose their comment (volatile RAM loss) on many devices.
+
+While general comments work perfectly, new conversations (inline code reviews) fail due to a "Zombie Thread" that hangs indefinitely. This case study moves from raw user evidence to a resilient architectural proposal.
+
+** Visualizing the Problem**
+ 
+<img width="448" height="1024" alt="image" src="https://github.com/user-attachments/assets/97048281-ef8e-491a-9297-36cc4493d394" />
+
+Figure 1: Analysis of the 'Infinite Spinner' and the resulting data loss across different Android environments.
+
+The above image captures the "Deadlock Point" identified during my research. It highlights the divergence in how different Android versions handle this failure, proving that the app currently lacks a standardized persistence layer.
 
 ## Primary recommendation (concise)
 Adopt an Atomic Persistence Layer: write drafts to local persistent storage (Room/SQLite) before initiating the network POST, add a client-side timeout (30s) to surface a Retry/Save Draft state, and attach a client-generated idempotency key to avoid duplicate posts on retry.
