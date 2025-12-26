@@ -1,3 +1,6 @@
+**Acknowledgements & Source**
+This case study references public user reports found in GitHub Discussion #181590 (https://github.com/orgs/community/discussions/181590). 
+
 # Case Study: Resolving GitHub Mobile Android PR Regression (Issue #181590)
 
 ## Executive summary
