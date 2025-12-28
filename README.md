@@ -174,9 +174,8 @@ I'm a student learning product management and open to feedback on:
 - Scope definition and constraint acknowledgment
 - Any aspect of the analysis methodology
 
-**Author:** Mithradevi K  
-**Institution:** Chennai Institute of Technology (Anna University)  
-**Purpose:** Learning portfolio for PM internship applications  
+**Author:** Mithradevi K   
+**Purpose:** Learning portfolio
 **Date:** December 2025
 
 ---
